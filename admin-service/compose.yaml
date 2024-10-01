@@ -1,0 +1,39 @@
+services:
+    admin:
+        build:
+          dockerfile: Dockerfile
+          target: app
+        image: admin_service
+        container_name: admin_service
+        volumes:
+          - .:/var/www/html
+        ports:
+          - 8000:8000
+        command: 'php artisan serve --host=0.0.0.0'
+        depends_on:
+          - admin_db
+
+    admin_queue:
+        build:
+            dockerfile: Dockerfile
+            target: app
+        image: admin_queue
+        container_name: admin_queue_container
+        command: 'php artisan queue:work'
+        depends_on:
+            - admin_db
+
+    admin_db:
+        image: mysql:latest
+        restart: unless-stopped
+        container_name: admin_database_container
+        environment:
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - mysqldata:/var/lib/mysql
+        ports:
+            - 33063:3306
+
+volumes:
+  mysqldata:

@@ -1,0 +1,31 @@
+vendor
+
+# Ignore local environment files
+.env
+.env.*
+
+# Ignore logs and other files that are not necessary for the container
+storage/logs
+storage/framework/cache/data
+storage/framework/sessions
+storage/framework/views
+
+# Ignore Git and Composer files
+.git
+.gitignore
+composer.lock
+
+# Ignore IDE config files
+.idea
+.vscode
+*.swp
+
+
+# Ignore Docker-specific files if not needed inside the container
+#.dockerignore
+#docker-compose.yml
+
+
+# Other unnecessary files
+.DS_Store
+
